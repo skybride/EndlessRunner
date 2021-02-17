@@ -1,1 +1,1 @@
-# Endelss Runner, Scripts Only
+# Endelss Runner, Assets directory only
