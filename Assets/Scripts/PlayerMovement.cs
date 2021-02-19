@@ -7,15 +7,11 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody rb;
 
     public float forwardForce = 2000f;
-    public float sidewaysForce = 500f;
+    /*    public float sidewaysForce = 500f;*/
+    public float sidewaysForce = 100f;
 
-    // Update is called once per frame
-    /*void Update()
-    {
-        rb.AddForce(0, 0, 2000 * Time.deltaTime); //Time.deltaTime even out frame rate
-    }*/
+    public Joystick joystick;
 
-    //When dealing with physics use FixedUpdate instead of Update
     void FixedUpdate()
     {
         rb.AddForce(0, 0, forwardForce * Time.deltaTime); //Time.deltaTime even out frame rate
@@ -33,6 +29,30 @@ public class PlayerMovement : MonoBehaviour
         if (rb.position.y < -1f)
         {
             FindObjectOfType<GameManager>().EndGame();
+        }
+
+
+        //Mobile
+        /*        if (Input.touchCount > 0)
+                {
+                    Touch touch = Input.GetTouch(0);
+                    Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                    touchPosition.z = 0f;
+                    transform.position = touchPosition;
+                }*/
+
+        //sidewaysForce = joystick.Horizontal * Time.deltaTime;
+
+        if (joystick.Horizontal >= .2f )
+        {
+            rb.AddForce((sidewaysForce/3) * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+        } else if (joystick.Horizontal <= -.2f)
+        {
+            rb.AddForce(-(sidewaysForce/3 )* Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+        }
+        else
+        {
+            rb.AddForce(0,0,0);
         }
     }
 }
